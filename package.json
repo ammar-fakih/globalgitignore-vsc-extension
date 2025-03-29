@@ -1,0 +1,97 @@
+{
+  "name": "global-gitignore",
+  "displayName": "Global Gitignore",
+  "description": "Add files and folders to global or local gitignore",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:globalGitignoreExplorer"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "global-gitignore-explorer",
+          "title": "Global Gitignore",
+          "icon": "$(list-tree)"
+        }
+      ]
+    },
+    "views": {
+      "global-gitignore-explorer": [
+        {
+          "id": "globalGitignoreExplorer",
+          "name": "Global Gitignore"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "global-gitignore.addToGlobalGitignore",
+        "title": "Add to Global Gitignore"
+      },
+      {
+        "command": "global-gitignore.addToGitignore",
+        "title": "Add to Gitignore"
+      },
+      {
+        "command": "global-gitignore.openGlobalGitignore",
+        "title": "Open Global Gitignore"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "global-gitignore.addToGlobalGitignore",
+          "when": "resourceScheme == 'file'",
+          "group": "gitignore@1"
+        },
+        {
+          "command": "global-gitignore.addToGitignore",
+          "when": "resourceScheme == 'file'",
+          "group": "gitignore@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "global-gitignore.addToGlobalGitignore",
+          "when": "editorTextFocus",
+          "group": "gitignore@1"
+        },
+        {
+          "command": "global-gitignore.addToGitignore",
+          "when": "editorTextFocus",
+          "group": "gitignore@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "global-gitignore.openGlobalGitignore",
+          "when": "true"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+} 
