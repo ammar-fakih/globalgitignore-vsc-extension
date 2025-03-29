@@ -3,6 +3,7 @@
   "displayName": "Global Gitignore",
   "description": "Add files and folders to global or local gitignore",
   "version": "0.0.1",
+  "publisher": "AmmarFakih",
   "repository": {
     "type": "git",
     "url": "https://github.com/ammar-fakih/globalgitignore-vsc-extension"
