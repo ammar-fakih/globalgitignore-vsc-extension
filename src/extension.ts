@@ -54,13 +54,16 @@ export function activate(context: vscode.ExtensionContext) {
     const addToGlobalGitignore = vscode.commands.registerCommand('global-gitignore.addToGlobalGitignore', async (uri?: vscode.Uri, uris?: vscode.Uri[]) => {
         try {
             let targetPaths: string[] = [];
+            let workspaceFolder: vscode.WorkspaceFolder | undefined;
             
             if (uris) {
                 // If called from context menu with multiple selections
                 targetPaths = uris.map(uri => uri.fsPath);
+                workspaceFolder = vscode.workspace.getWorkspaceFolder(uris[0]);
             } else if (uri) {
                 // If called from context menu with single selection
                 targetPaths = [uri.fsPath];
+                workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
             } else {
                 // If called from command palette, get the active editor
                 const editor = vscode.window.activeTextEditor;
@@ -69,6 +72,11 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
                 targetPaths = [editor.document.uri.fsPath];
+                workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+            }
+
+            if (!workspaceFolder) {
+                throw new Error('No workspace folder found');
             }
 
             // Check if global gitignore exists
@@ -95,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
             let existingPaths: string[] = [];
 
             for (const targetPath of targetPaths) {
-                const relativePath = path.relative(os.homedir(), targetPath);
+                const relativePath = path.relative(workspaceFolder.uri.fsPath, targetPath);
                 if (!gitignoreContent.includes(relativePath)) {
                     fs.appendFileSync(globalGitignorePath, `\n${relativePath}`);
                     addedPaths.push(relativePath);
