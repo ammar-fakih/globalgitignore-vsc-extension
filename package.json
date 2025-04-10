@@ -2,7 +2,7 @@
   "name": "global-gitignore",
   "displayName": "Global Gitignore",
   "description": "Add files and folders to global or local gitignore",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "AmmarFakih",
   "repository": {
     "type": "git",
@@ -47,8 +47,16 @@
         "title": "Add to Gitignore"
       },
       {
+        "command": "global-gitignore.addToGitExclude",
+        "title": "Add to .git/info/exclude"
+      },
+      {
         "command": "global-gitignore.openGlobalGitignore",
         "title": "Open Global Gitignore"
+      },
+      {
+        "command": "global-gitignore.openGitExclude",
+        "title": "Open .git/info/exclude"
       }
     ],
     "menus": {
@@ -62,6 +70,11 @@
           "command": "global-gitignore.addToGitignore",
           "when": "resourceScheme == 'file'",
           "group": "gitignore@2"
+        },
+        {
+          "command": "global-gitignore.addToGitExclude",
+          "when": "resourceScheme == 'file'",
+          "group": "gitignore@3"
         }
       ],
       "editor/context": [
@@ -74,11 +87,20 @@
           "command": "global-gitignore.addToGitignore",
           "when": "editorTextFocus",
           "group": "gitignore@2"
+        },
+        {
+          "command": "global-gitignore.addToGitExclude",
+          "when": "editorTextFocus",
+          "group": "gitignore@3"
         }
       ],
       "commandPalette": [
         {
           "command": "global-gitignore.openGlobalGitignore",
+          "when": "true"
+        },
+        {
+          "command": "global-gitignore.openGitExclude",
           "when": "true"
         }
       ]
